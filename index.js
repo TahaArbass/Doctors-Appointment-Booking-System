@@ -1,7 +1,7 @@
 const express = require("express");
 const moment = require("moment");
-const config = require("./db/config");
-const { query } = require("./db/db");
+// const config = require("./db/config");
+// const { query } = require("./db/db");
 
 require("dotenv").config();
 
@@ -11,15 +11,12 @@ const cors = require('cors');
 const port = process.env.PORT || 3001;
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.get("/", async(req, res)=>{
-    let sql = "select * from users";
-    const users = await query(sql);
-    res.status(200).json(users);
-});
+const patients = require('./routes/patient.route');
 
-
-// app.use('/api/users', users);
+app.use('/api/patients', patients);
 // app.use('/api/clients', clients);
 
 
