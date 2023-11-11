@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/', getAllPatients);
 router.get('/:id', getPatientById);
-router.post('/', createPatient)
+router.post('/', PatientValidator, createPatient)
 
 module.exports = router;

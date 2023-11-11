@@ -12,7 +12,7 @@ const port = process.env.PORT || 3001;
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json());
 
 const patients = require('./routes/patient.route');
 
