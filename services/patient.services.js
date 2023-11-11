@@ -18,7 +18,7 @@ const Patient = require("../models/patient");
 // };
 
 const createPatient = async (req, res) => {
-  const { firstName, lastName, email, phoneNumber, dateOfBirth, password } = req.body;
+  const { firstName, lastName, email, phoneNumber, dateOfBirth, password, addressId } = req.body;
 
   console.log(req.body)
   
@@ -30,6 +30,7 @@ const createPatient = async (req, res) => {
       phoneNumber,
       dateOfBirth,
       password,
+      addressId,
     });
     res.status(201).json(patient);
   } catch (error) {
