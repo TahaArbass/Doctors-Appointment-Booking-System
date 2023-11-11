@@ -19,6 +19,8 @@ const Address = db.define('Address', {
     type: DataTypes.STRING(100),
     allowNull: true,
   },
+},{
+  timestamps: false,
 });
 
 module.exports = Address;

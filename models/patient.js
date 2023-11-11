@@ -38,11 +38,8 @@ const Patient = db.define('Patient', {
   address_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: Address,
-      key: 'id',
-    },
   },
+  
 }, {
   timestamps: false,
 });

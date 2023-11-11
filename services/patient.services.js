@@ -1,6 +1,6 @@
 const { json } = require("body-parser");
 const Patient = require("../models/patient");
-
+const Address = require("../models/address");
 // const createPatient = async (req, res) => {
 //   try {
 //     const newPatient = await Patient.create({
@@ -18,11 +18,19 @@ const Patient = require("../models/patient");
 // };
 
 const createPatient = async (req, res) => {
-  const { firstName, lastName, email, phoneNumber, dateOfBirth, password, addressId } = req.body;
+  const { firstName, lastName, email, phoneNumber, dateOfBirth, password, address_id } = req.body;
 
   console.log(req.body)
   
+
   try {
+
+    const existingAddress = await Address.findByPk(address_id);
+
+    if (!existingAddress) {
+      return res.status(400).json({ error: 'Address not found' });
+    }
+
     const patient = await Patient.create({
       firstName,
       lastName,
@@ -30,7 +38,7 @@ const createPatient = async (req, res) => {
       phoneNumber,
       dateOfBirth,
       password,
-      addressId,
+      address_id,
     });
     res.status(201).json(patient);
   } catch (error) {
