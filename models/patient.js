@@ -10,30 +10,30 @@ const Patient = db.define('Patient', {
   },
   first_name: {
     type: DataTypes.STRING(200),
-    allowNull: true,
+    allowNull: false,
   },
   last_name: {
     type: DataTypes.STRING(200),
-    allowNull: true,
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING(150),
-    allowNull: true,
+    allowNull: false,
     validate: {
       isEmail: true,
     },
   },
   phone_number: {
     type: DataTypes.STRING(20),
-    allowNull: true,
+    allowNull: false,
   },
   date_of_birth: {
     type: DataTypes.DATEONLY,
-    allowNull: true,
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING(200),
-    allowNull: true,
+    allowNull: false,
   },
   address_id: {
     type: DataTypes.INTEGER,

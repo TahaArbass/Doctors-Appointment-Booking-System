@@ -18,7 +18,7 @@ const Address = require("../models/address");
 // };
 
 const createPatient = async (req, res) => {
-  const { firstName, lastName, email, phoneNumber, dateOfBirth, password, address_id } = req.body;
+  const { first_name, last_name, email, phone_number, date_of_birth, password, address_id } = req.body;
 
   console.log(req.body)
   
@@ -32,11 +32,11 @@ const createPatient = async (req, res) => {
     }
 
     const patient = await Patient.create({
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email,
-      phoneNumber,
-      dateOfBirth,
+      phone_number,
+      date_of_birth,
       password,
       address_id,
     });
