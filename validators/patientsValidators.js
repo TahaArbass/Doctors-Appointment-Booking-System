@@ -1,21 +1,22 @@
 const { body, validationResult } = require('express-validator');
 
 const PatientValidator = [
-    body('firstName').exists().isLength({min: 3}).
+    
+    body('first_name').exists().isLength({min: 3}).
         withMessage('First name is required and must be at least 3 characters long'),
 
-    body('lastName').exists().isLength({min: 3}).
+    body('last_name').exists().isLength({min: 3}).
         withMessage('Last name is required and must be at least 3 characters long'),
 
     body('email').exists().isEmail().
         withMessage('Email is required and correct format is required'),
 
     // assuming we are in Lebanon
-    body('phoneNumber')
+    body('phone_number')
         .exists().withMessage('Phone number is required')
         .matches(/^[0-9]{8}$/).withMessage('Phone number must be exactly 8 digits'),
 
-    body('dateOfBirth')
+    body('date_of_birth')
         .exists().withMessage('Date of birth is required')
         .matches(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
         .withMessage('Date of birth must be in the format YYYY-MM-DD'),
