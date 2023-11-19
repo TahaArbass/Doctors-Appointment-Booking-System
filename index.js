@@ -20,7 +20,7 @@ const doctors = require("./routes/doctor.route");
 const addresses = require("./routes/address.route");
 const doctor_specialties = require("./routes/doctor_specialties.route");
 const appointments = require("./routes/appointment.route");
-
+const reviews = require("./routes/review.route");
 
 // patient routes
 app.use('/api/patients', patients);
@@ -40,10 +40,11 @@ app.use("api/doctor_specialties", doctor_specialties);
 // appointments route
 app.use("/api/appointments", appointments);
 
+// reviews route
+app.use("/api/reviews", reviews);
 
 // just making sure that I am on the right port
 app.listen(port, () => {
     console.log(`my app is listening ${port}`);
 
-})
-
+});

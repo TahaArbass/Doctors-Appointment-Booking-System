@@ -48,6 +48,22 @@ const Patient = db.define('Patient', {
   },
   
 }, {
+  //make sure to hash before inserting into database
+  
+  hooks: {
+    beforeCreate: async (patient) => {
+      if (patient.password) {
+        const salt = await bcrypt.genSalt();
+        patient.password = await bcrypt.hash(patient.password, salt);
+      }
+    },
+    beforeUpdate: async (patient) => {
+      if (patient.password) {
+        const salt = await bcrypt.genSalt();
+        patient.password = await bcrypt.hash(patient.password, salt);
+      }
+    }
+  },
   timestamps: false,
 });
 
