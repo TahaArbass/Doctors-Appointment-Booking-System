@@ -3,7 +3,7 @@ const Specialty = require('../models/specialty');
 const getAllSpecialties = async (req, res) => {
     try {
       const specialties = await Specialty.findAll();
-      res.json(specialties);
+      res.status(200).json(specialties);
     } catch (error) {
       console.error(error);
     }
@@ -14,7 +14,7 @@ const getSpecialtyById = async (req, res) => {
     try {
         const specialty = await Specialty.findByPk(id);
         if (specialty) {
-            res.json(specialty);
+            res.status(200).json(specialty);
         }
         else {
             return res.status(404).json({ message: 'Specialty not found' });
@@ -30,7 +30,7 @@ const getSpecialtyByName = async (req, res) => {
     try {
         const specialty = await Specialty.findOne({ where: { name: name } });
         if (specialty) {
-            res.json(specialty);
+            res.status(200).json(specialty);
         }
         else {
             return res.status(404).json({ message: 'Specialty not found' });
@@ -45,8 +45,10 @@ const createSpecialty = async (req, res) => {
     const name = req.body.name;
     
     try {
-        const specialty = await Specialty.create( name );
-        res.status(201).json(specialty);
+        const createdSpecialty = await Specialty.create({name: name});
+        res.status(201).json({
+            message:"Specialty created successfully",
+            createdSpecialty: createdSpecialty.toJSON()});
     }
     catch (error) {
         console.error(error);
@@ -57,11 +59,13 @@ const updateSpecialty = async (req, res) => {
     const id = req.params.id;
     const name = req.body.name;
     try {
-        const specialty = await Specialty.findByPk(id);
-        if (specialty) {
-            specialty.name = name;
-            specialty.save();
-            res.json(specialty);
+        const updatedSpecialty = await Specialty.findByPk(id);
+        if (updatedSpecialty) {
+            updatedSpecialty.name = name;
+            updatedSpecialty.save();
+            res.status(200).json({
+                message:"Specialty updated successfully",
+                updatedSpecialty: updatedSpecialty.toJSON()});
         }
         else {
             return res.status(404).json({ message: 'Specialty not found' });
@@ -72,10 +76,31 @@ const updateSpecialty = async (req, res) => {
     }
 }
 
+const deleteSpecialty = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const specialty = await Specialty.findByPk(id);
+    
+        if (!specialty) {
+          return res.status(404).json({ error: 'Specialty not found' });
+        }
+        else{
+            const deletedSpecialty = await specialty.destroy();
+            res.status(200).json({
+                message: 'Specialty deleted successfully',
+                deletedSpecialty: deletedSpecialty.toJSON(),
+            });
+        }    
+      } catch (error) {
+        console.error(error);
+      }
+}
+
 module.exports = {
     getAllSpecialties,
     getSpecialtyById,
     getSpecialtyByName,
     createSpecialty,
     updateSpecialty,
+    deleteSpecialty,
 };

@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const db = require("../db/configSqlz");
 const Address = require('./address'); 
 
-const Patient = db.define('Patient', {
+const Doctor = db.define('Doctor', {
 
   id: {
     type: DataTypes.INTEGER,
@@ -14,7 +14,7 @@ const Patient = db.define('Patient', {
     type: DataTypes.STRING(200),
     allowNull: false,
   },
-  
+
   last_name: {
     type: DataTypes.STRING(200),
     allowNull: false,
@@ -32,6 +32,7 @@ const Patient = db.define('Patient', {
     type: DataTypes.STRING(20),
     allowNull: false,
   },
+
   date_of_birth: {
     type: DataTypes.DATEONLY,
     allowNull: false,
@@ -41,8 +42,8 @@ const Patient = db.define('Patient', {
     type: DataTypes.STRING(200),
     allowNull: false,
   },
-
-  address_id: {
+  
+  clinic_address_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -51,8 +52,8 @@ const Patient = db.define('Patient', {
   timestamps: false,
 });
 
-// establish foreign key
-Patient.belongsTo(Address, { foreignKey: 'address_id' });
+// foreign key to address table
+Doctor.belongsTo(Address, { foreignKey: 'clinic_address_id' });
 
 
-module.exports = Patient;
+module.exports = Doctor;

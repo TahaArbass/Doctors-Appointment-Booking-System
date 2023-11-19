@@ -1,4 +1,3 @@
-const { json } = require("body-parser");
 const Patient = require("../models/patient");
 const Address = require("../models/address");
 
@@ -22,7 +21,9 @@ const createPatient = async (req, res) => {
       password,
       address_id,
     });
+
     res.status(201).json(patient);
+
   } catch (error) {
     console.error(error);
   }
@@ -32,7 +33,7 @@ const createPatient = async (req, res) => {
 const getAllPatients = async (req, res) => {
   try {
     const patients = await Patient.findAll();
-    res.json(patients);
+    res.status(200).json(patients);
   } catch (error) {
     console.error(error);
   }
@@ -43,7 +44,7 @@ const getPatientById = async (req, res) => {
   try {
     const patient = await Patient.findByPk(id);
     if (patient) {
-      res.json(patient);
+      res.status(200).json(patient);
     }
     else {
       return res.status(404).json({ message: 'Patient not found' });
@@ -59,7 +60,7 @@ const getPatientByName = async (req, res) => {
   try {
     const patient = await Patient.findAll({where: {first_name: first_name, last_name: last_name}});
     if (patient) {
-      res.json(patient);
+      res.status(200).json(patient);
     }
     else {
       return res.status(404).json({ message: 'Patient not found' });
@@ -74,7 +75,7 @@ const getPatientByPhoneNumber = async (req, res) => {
   try {
     const patient = await Patient.findAll({where: {phone_number: phone_number}});
     if (patient) {
-      res.json(patient);
+      res.status(200).json(patient);
     }
     else {
       return res.status(404).json({ message: 'Patient not found' });
@@ -97,11 +98,20 @@ const updatePatient = async (req, res) => {
       },
       { where: { id: req.body.id } }
     );
-    res.json(updatedPatient);
+
+    if(!updatedPatient) {
+      return res.status(404).json({ error: 'Patient not found' });
+    }
+
+    res.status(200).json({
+      message: 'Patient updated successfully',
+      updatedPatient: updatedPatient.toJSON,
+    });
   } catch (error) {
     console.error(error);
   }
 };
+
 
 const deletePatient = async (req, res) => {
   try {
@@ -115,17 +125,13 @@ const deletePatient = async (req, res) => {
     const deletedPatient = await patient.destroy();
     
     // Send a JSON response indicating success
-    res.json({
-      success: true,
+    res.status(200).json({
       message: 'Patient deleted successfully',
       deletedPatient: deletedPatient.toJSON(),
     });
 
   } catch (error) {
     console.error(error);
-    
-    // Send a JSON response indicating failure
-    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
