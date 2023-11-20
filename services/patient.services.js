@@ -1,5 +1,7 @@
 const Patient = require("../models/patient");
 const Address = require("../models/address");
+const { generateToken } = require("../utils/auth");
+const bcrypt = require('bcrypt');
 
 const createPatient = async (req, res) => {
   const { first_name, last_name, email, phone_number, date_of_birth, password, address_id } = req.body;
@@ -22,7 +24,13 @@ const createPatient = async (req, res) => {
       address_id,
     });
 
-    res.status(201).json(patient);
+    const token = generateToken({id: patient.id});
+
+    res.status(201).json({
+      message: 'Patient created successfully',
+      patient: patient.toJSON(),
+      token,
+    });
 
   } catch (error) {
     console.error(error);
@@ -85,6 +93,22 @@ const getPatientByPhoneNumber = async (req, res) => {
   }
 };
 
+//get patient by email
+const getPatientByEmail = async (req, res) => {
+  const email = req.params.email;
+  try {
+    const patient = await Patient.findAll({where: {email: email}});
+    if (patient) {
+      res.status(200).json(patient);
+    }
+    else {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const updatePatient = async (req, res) => {
   try {
     const updatedPatient = await Patient.update(
@@ -135,12 +159,51 @@ const deletePatient = async (req, res) => {
   }
 };
 
+// signup patient
+const signupPatient = async (req, res) => {
+  createPatient(req, res);
+}
+
+
+
+// login patient
+const loginPatient = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const patient = await Patient.findOne({ where: { email } });
+
+    if (!patient) {
+      return res.status(404).json({ error: 'Patient not found' });
+    }
+
+    const passwordValid = await bcrypt.compare(password, patient.password);
+
+    if (!passwordValid) {
+      return res.status(401).json({ error: 'Incorrect password' });
+    }
+
+    const token = generateToken(patient.id);
+
+    res.status(200).json({
+      message: 'Patient logged in successfully',
+      token,
+    });
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
 module.exports = {
   createPatient,
   getAllPatients,
   getPatientById,
   getPatientByName,
   getPatientByPhoneNumber,
+  getPatientByEmail,
   updatePatient,
   deletePatient,
+  signupPatient,
+  loginPatient,
 };

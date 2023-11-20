@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require("../db/configSqlz");
 const Address = require('./address'); 
+const bcrypt = require('bcrypt');
 
 const Patient = db.define('Patient', {
 

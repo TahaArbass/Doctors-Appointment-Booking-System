@@ -88,6 +88,22 @@ const getDoctorByPhoneNumber = async (req, res) => {
   }
 };
 
+// search for doctor by email
+const getDoctorByEmail = async (req, res) => {
+  const email = req.params.email;
+  try {
+    const doctor = await Doctor.findOne({where: {email: email}});
+    if (doctor) {
+      res.status(200).json(patient);
+    }
+    else {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const updateDoctor = async (req, res) => {
   try {
 
@@ -147,6 +163,7 @@ module.exports = {
   getDoctorById,
   getDoctorByName,
   getDoctorByPhoneNumber,
+  getDoctorByEmail,
   createDoctor,
   updateDoctor,
   deleteDoctor
