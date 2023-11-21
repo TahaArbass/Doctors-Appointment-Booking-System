@@ -19,7 +19,7 @@ const reviewValidator = require("../validators/reviewValidator");
 // getters routes
 router.get("/", getAllReviews);
 
-router.get("/:id", getReviewById);
+router.get("/id/:id", getReviewById);
 
 router.get("/doctor/:doctor_id", getReviewsByDoctorId);
 

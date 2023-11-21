@@ -3,7 +3,7 @@ const Address = require("../models/address");
 const getAllAddresses = async (req, res) => {
     try {
         const addresses = await Address.findAll();
-        res.status(200).json(doctors);
+        res.status(200).json(addresses);
     } catch (error) {
         console.error(error);
     }
@@ -14,7 +14,7 @@ const getAddressById = async (req, res) => {
     try {
         const address = await Address.findByPk(id);
         if (address) {
-            res.status(200).json(doctor);
+            res.status(200).json(address);
         }
         else {
             return res.status(404).json({ message: 'Address not found' });
@@ -30,7 +30,7 @@ const getAddressByStreet = async (req, res) => {
     try {
         const address = await Address.findAll({ where: { street_address: street_address } });
         if (address) {
-            res.status(200).json(doctor);
+            res.status(200).json(address);
         }
         else {
             return res.status(404).json({ message: 'Address not found' });
@@ -46,7 +46,7 @@ const getAddressByCity = async (req, res) => {
     try {
         const address = await Address.findAll({ where: { city: city } });
         if (address) {
-            res.status(200).json(doctor);
+            res.status(200).json(address);
         }
         else {
             return res.status(404).json({ message: 'Address not found' });
@@ -62,7 +62,7 @@ const getAddressByCountry = async (req, res) => {
     try {
         const address = await Address.findAll({ where: { country: country } });
         if (address) {
-            res.status(200).json(doctor);
+            res.status(200).json(address);
         }
         else {
             return res.status(404).json({ message: 'Address not found' });
@@ -98,13 +98,14 @@ const updateAddress = async (req, res) => {
             street_address,
             city,
             country,
-        });
+        } , { where: { id: req.params.id } });
 
         if (!address) {
             return res.status(404).json({ message: 'Address not found' });
         }
 
-        res.status(201).json(address);
+        res.status(201).json({ message: 'Address updated successfully' ,
+        address: address.toJSON});
 
     } catch (error) {
         console.error(error);

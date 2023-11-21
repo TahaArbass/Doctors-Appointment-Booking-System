@@ -3,12 +3,12 @@ const Address = require("../models/address");
 
 // create a doctor
 const createDoctor = async (req, res) => {
-  const { first_name, last_name, email, phone_number, date_of_birth, password, address_id } = req.body;
+  const { first_name, last_name, email, phone_number, date_of_birth, password, clinic_address_id } = req.body;
 
   try {
 
     // check if the address exists
-    const existingAddress = await Address.findByPk(address_id);
+    const existingAddress = await Address.findByPk(clinic_address_id);
 
     if (!existingAddress) {
       return res.status(400).json({ error: 'Address not found' });
@@ -22,7 +22,7 @@ const createDoctor = async (req, res) => {
       phone_number,
       date_of_birth,
       password,
-      address_id,
+      clinic_address_id,
     });
     res.status(201).json(createdDoctor);
   } catch (error) {
@@ -76,7 +76,7 @@ const getDoctorByName = async (req, res) => {
 const getDoctorByPhoneNumber = async (req, res) => {
   const phone_number = req.params.phone_number;
   try {
-    const doctor = await doctor.findAll({where: {phone_number: phone_number}});
+    const doctor = await Doctor.findAll({where: {phone_number: phone_number}});
     if (doctor) {
       res.status(200).json(doctor);
     }
@@ -94,7 +94,7 @@ const getDoctorByEmail = async (req, res) => {
   try {
     const doctor = await Doctor.findOne({where: {email: email}});
     if (doctor) {
-      res.status(200).json(patient);
+      res.status(200).json(doctor);
     }
     else {
       return res.status(404).json({ message: 'Patient not found' });
@@ -117,7 +117,7 @@ const updateDoctor = async (req, res) => {
         date_of_birth: req.body.date_of_birth,
         password: req.body.password,
       },
-      { where: { id: req.body.id } }
+      { where: { id: req.params.id } }
     );
 
     if(!updatedDoctor) {

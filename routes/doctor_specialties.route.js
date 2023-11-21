@@ -19,9 +19,9 @@ router.get("/", getAllDoctor_Specialties);
 
 router.get("/id/:id", getDoctor_SpecialtyById);
 
-router.get("/doctor/:id", getDoctor_SpecialtyByDoctorId);
+router.get("/doctor/:doctor_id", getDoctor_SpecialtyByDoctorId);
 
-router.get("/specialty/:id", getDoctor_SpecialtyBySpecialtyId);
+router.get("/specialty/:specialty_id", getDoctor_SpecialtyBySpecialtyId);
 
 // create, update and delete 
 router.post("/", doctor_specialtyValidator ,createDoctor_Specialty);

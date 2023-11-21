@@ -33,8 +33,8 @@ router.get("/date/:appointment_datetime", getAppointmentByDate);
 
 router.post("/create", AppointmentValidator, createAppointment);
 
-router.put("id/:id", AppointmentValidator, updateAppointment);
+router.put("/id/:id", AppointmentValidator, updateAppointment);
 
-router.delete("id/:id", deleteAppointment);
+router.delete("/id/:id", deleteAppointment);
 
 module.exports = router;

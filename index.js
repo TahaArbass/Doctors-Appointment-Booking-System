@@ -35,7 +35,7 @@ app.use("/api/doctors", doctors);
 app.use("/api/addresses", addresses);
 
 // doctor_specialties route
-app.use("api/doctor_specialties", doctor_specialties);
+app.use("/api/doctorSpecialties", doctor_specialties);
 
 // appointments route
 app.use("/api/appointments", appointments);

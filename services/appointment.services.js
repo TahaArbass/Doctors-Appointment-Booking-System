@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const Appointment = require("../models/appointment");
 const Doctor = require("../models/doctor");
 const Patient = require("../models/patient");
@@ -8,7 +9,7 @@ const getAllAppointments = async (req, res) => {
     try {
         const appointments = await Appointment.findAll();
 
-        res.status(200).json(patients);
+        res.status(200).json(appointments);
     } catch (error) {
         console.error(error);
     }
@@ -206,7 +207,7 @@ const updateAppointment = async (req, res) => {
             appointment_datetime,
             status,
             reason,
-        });
+        }, {where : { id: req.params.id }});
 
         if (!updatedAppointment) {
             return res.status(404).json({ error: 'Appointment not updated' });

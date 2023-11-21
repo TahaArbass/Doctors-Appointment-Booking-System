@@ -21,7 +21,7 @@ router.get("/", getAllAddresses);
 
 router.get("/id/:id", getAddressById);
 
-router.get("/street/:street", getAddressByStreet);
+router.get("/street/:street_address", getAddressByStreet);
 
 router.get("/city/:city", getAddressByCity);
 
@@ -33,6 +33,6 @@ router.post("/", AddressValidator ,createAddress);
 
 router.put("/id/:id", AddressValidator, updateAddress);
 
-router.delete("id/:id", deleteAddress);
+router.delete("/id/:id", deleteAddress);
 
 module.exports = router;
