@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Patient</title>
+
+  <!-- Add Bootstrap CSS (you may need to adjust the path based on your project structure) -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+  <%- include('partials/header') %>
+    <%- include('partials/menu') %>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="card mt-5">
+              <div class="card-body">
+
+                <h1>Update Patient Information</h1>
+                <!-- Add your form for adding a user -->
+
+                <!-- Bootstrap Form -->
+                <form method="get" action="/api/patients/updateAccount">
+                  <input type="hidden" id="id" name="id">
+
+                  <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="date_of_birth">Date of Birth:</label>
+                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="address_id">Address ID:</label>
+                    <input type="text" class="form-control" id="address_id" name="address_id" required>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include('partials/footer') %>
+</body>
+
+</html>

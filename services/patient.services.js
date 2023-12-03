@@ -26,11 +26,13 @@ const createPatient = async (req, res) => {
 
     const token = generateToken({id: patient.id});
 
-    res.status(201).json({
-      message: 'Patient created successfully',
-      patient: patient.toJSON(),
-      token,
-    });
+    // res.status(201).json({
+    //   message: 'Patient created successfully',
+    //   patient: patient.toJSON(),
+    //   token,
+    // });
+
+    res.redirect('/api/patients/');
 
   } catch (error) {
     console.error(error);
@@ -41,7 +43,8 @@ const createPatient = async (req, res) => {
 const getAllPatients = async (req, res) => {
   try {
     const patients = await Patient.findAll();
-    res.status(200).json(patients);
+    res.render('detailPatient', {patients: patients});
+    // res.status(200).json(patients);
   } catch (error) {
     console.error(error);
   }
@@ -109,28 +112,64 @@ const getPatientByEmail = async (req, res) => {
   }
 };
 
+// const updatePatient = async (req, res) => {
+//   try {
+//     const updatedPatient = await Patient.update(
+//       {
+//         first_name: req.body.first_name,
+//         last_name: req.body.last_name,
+//         email: req.body.email,
+//         phone_number: req.body.phone_number,
+//         date_of_birth: req.body.date_of_birth,
+//         password: req.body.password,
+//       },
+//       { where: { id: req.body.id } }
+//     );
+
+//     if(!updatedPatient) {
+//       // return res.status(404).json({ error: 'Patient not found' });
+//       res.render('updatePatient', {error: 'Patient not found'});
+//     }
+
+//     // res.status(200).json({
+//     //   message: 'Patient updated successfully',
+//     //   updatedPatient: updatedPatient.toJSON,
+//     // });
+
+//     res.render('updatePatient',
+//      {message: 'Patient updated successfully',
+//       updatedPatient: updatedPatient.toJSON});
+
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
 const updatePatient = async (req, res) => {
   try {
-    const updatedPatient = await Patient.update(
-      {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        phone_number: req.body.phone_number,
-        date_of_birth: req.body.date_of_birth,
-        password: req.body.password,
-      },
-      { where: { id: req.body.id } }
-    );
+    const patient = await Patient.findOne({ where: { id: req.body.id } });
 
-    if(!updatedPatient) {
-      return res.status(404).json({ error: 'Patient not found' });
+    if(!patient) {
+      res.render('updatePatient', {error: 'Patient not found'});
+      return;
     }
 
-    res.status(200).json({
-      message: 'Patient updated successfully',
-      updatedPatient: updatedPatient.toJSON,
-    });
+    patient.first_name = req.body.first_name;
+    patient.last_name = req.body.last_name;
+    patient.email = req.body.email;
+    patient.phone_number = req.body.phone_number;
+    patient.date_of_birth = req.body.date_of_birth;
+    patient.password = req.body.password;
+
+    const updatedPatient = await patient.save();
+
+    // res.render('updatePatient', {
+    //   message: 'Patient updated successfully',
+    //   updatedPatient: updatedPatient
+    // });
+
+    res.redirect('/api/patients/');
+      
   } catch (error) {
     console.error(error);
   }
@@ -148,11 +187,13 @@ const deletePatient = async (req, res) => {
 
     const deletedPatient = await patient.destroy();
     
-    // Send a JSON response indicating success
-    res.status(200).json({
-      message: 'Patient deleted successfully',
-      deletedPatient: deletedPatient.toJSON(),
-    });
+    // // Send a JSON response indicating success
+    // res.status(200).json({
+    //   message: 'Patient deleted successfully',
+    //   deletedPatient: deletedPatient.toJSON(),
+    // });
+
+    res.redirect('/api/patients/');
 
   } catch (error) {
     console.error(error);

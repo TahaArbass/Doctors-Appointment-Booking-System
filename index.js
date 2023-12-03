@@ -2,7 +2,7 @@ const express = require("express");
 
 require("dotenv").config();
 
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 // setting up my port
 const port = process.env.PORT || 3001;
@@ -10,8 +10,10 @@ const port = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.json());
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 
+app.set('view engine', 'ejs');
 
 // getting routes
 const patients = require('./routes/patient.route');
@@ -48,3 +50,7 @@ app.listen(port, () => {
     console.log(`my app is listening ${port}`);
 
 });
+
+app.get('/home', (req, res) => {
+    res.render('homePage');
+  });

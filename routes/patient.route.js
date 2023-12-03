@@ -29,15 +29,23 @@ router.get('/email/:email', getPatientByEmail);
 
 
 // create, update, delete patient
-router.post('/', PatientValidator, createPatient);
+router.post('/create', PatientValidator, createPatient);
 
 router.post('/signup', PatientValidator, signupPatient);
+router.get('/signup', (req, res) => {
+    res.render('signupPatient');
+}); // for the view
 
 router.post('/login', loginPatient);
 
-router.put('/account/:id', authMiddleware, PatientValidator, updatePatient);
+router.put('/updateAccount', PatientValidator, updatePatient);
+router.get('/updateAccount', PatientValidator, updatePatient); // for the view
+router.get('/updatePatient/:id', (req, res) => {
+    res.render('updatePatient');
+}); // for the view
 
-router.delete('/account/:id', deletePatient);
+router.delete('/deleteAccount/:id', deletePatient);
+router.get('/deletePatient/:id', deletePatient); // for the view
 
 // export router
 module.exports = router;
