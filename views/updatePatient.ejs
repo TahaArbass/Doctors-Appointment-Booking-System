@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Update Patient</title>
 
-  <!-- Add Bootstrap CSS (you may need to adjust the path based on your project structure) -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 
 
@@ -26,8 +25,8 @@
                 <!-- Add your form for adding a user -->
 
                 <!-- Bootstrap Form -->
-                <form method="get" action="/api/patients/updateAccount">
-                  <input type="hidden" id="id" name="id">
+                <form method="post" action="/api/patients/updateAccount">
+                  <input type="hidden" id="id" name="id" value="<%= id %>" >
 
                   <div class="form-group">
                     <label for="first_name">First Name:</label>

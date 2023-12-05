@@ -38,10 +38,10 @@ router.get('/signup', (req, res) => {
 
 router.post('/login', loginPatient);
 
-router.put('/updateAccount', PatientValidator, updatePatient);
-router.get('/updateAccount', PatientValidator, updatePatient); // for the view
+// router.put('/updateAccount', PatientValidator, updatePatient);
+router.post('/updateAccount', PatientValidator, updatePatient); // for the view
 router.get('/updatePatient/:id', (req, res) => {
-    res.render('updatePatient');
+    res.render('updatePatient', {id: req.params.id});
 }); // for the view
 
 router.delete('/deleteAccount/:id', deletePatient);
