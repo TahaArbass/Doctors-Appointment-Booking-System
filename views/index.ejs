@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags for character set and viewport settings -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title of the document -->
+    <title>Welcome!</title>
+
+    <!-- Link to Bootstrap CSS from a CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Internal styles for the document -->
+    <style>
+        /* Styling for the 'section' element */
+        section {
+            padding: 60px 0;
+        }
+
+        /* Body background color */
+        body {
+            background-color: #e4e4e4;
+        }
+
+        /* Styling for the buttons with thicker border */
+        .btn-outline-dark {
+            border-width: 2px;
+        }
+    </style>
+</head>
+    <!-- Body section for the document -->
+
+<body>
+    <!-- Main image and intro text section -->
+    <section id="intro">
+        <!-- Container for layout control -->
+        <div class="container-lg">
+            <!-- Row for content alignment -->
+            <div class="row justify-content-center align-items-center">
+                <!-- First column for text content -->
+                <div class="col-md-5 text-center text-md-start">
+                    <!-- Heading with multiple text elements for welcome message -->
+                    <h1>
+                        <div class="display-2 fw-bolder">Welcome</div>
+                        <div class="display-5 text-muted fw-bold">To Doctors' Appointment Booking System</div>
+                    </h1>
+                    <!-- Subheading with lead class and additional styling for emphasis -->
+                    <p class="lead my-4 text-muted fw-bold fst-italic">Empowering Wellness, One Click at a Time – Your
+                        Journey to Health Begins with Us!</p>
+                    <!-- Button with a link to patient signup -->
+                    <a href="/api/patients/signup" class="btn btn-outline-dark btn-lg">Get Started</a>
+                </div>
+
+                <!-- Second column for an image -->
+                <div class="col-md-5 text-center">
+                    <img src="/assets/intro-pic1.png" class="img-fluid" alt="image">
+                </div>
+
+                <!-- Additional row for login options -->
+                <div class="row justify-content-center align-items-center">
+                    <!-- Column for login options -->
+                    <div class="col-md-5 text-center">
+                        <!-- Text for users with existing accounts -->
+                        <p class="lead my-4 text-muted fw-bold">Already Have An Account?</p>
+                        <!-- Row for two login buttons, one for patients and one for doctors -->
+                        <div class="row">
+                            <!-- Column for patient login button -->
+                            <div class="col-sm-6 my-2">
+                                <a href="/api/patients/login" class="btn btn-outline-dark btn-lg btn-block">Login As A
+                                    Patient</a>
+                            </div>
+                            <!-- Column for doctor login button -->
+                            <div class="col-sm-6 my-2">
+                                <a href="/api/doctors/login" class="btn btn-outline-dark btn-lg btn-block">Login As A Doctor</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <% include('partials/footer') %>
+
+    <!-- Bootstrap JS script from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    
+</body>
+
+</html>

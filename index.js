@@ -11,6 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 // app.use(bodyParser.json());
 
 app.set('view engine', 'ejs');
@@ -54,3 +55,10 @@ app.listen(port, () => {
 app.get('/home', (req, res) => {
     res.render('homePage');
   });
+
+  app.get('/index', (req, res) => {
+    res.render('index');
+  });
+
+  app.get('/doctor-or-patient', (req, res) => {
+    res.render('doctor-or-patient');});
