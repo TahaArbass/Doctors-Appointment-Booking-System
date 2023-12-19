@@ -41,7 +41,8 @@ router.post('/login', loginPatient);
 // router.put('/updateAccount', PatientValidator, updatePatient);
 router.post('/updateAccount', PatientValidator, updatePatient); // for the view
 router.get('/updatePatient/:id', (req, res) => {
-    res.render('updatePatient', {id: req.params.id});
+    const id = req.params.id;
+    res.render('updatePatient', {id: id});
 }); // for the view
 
 router.delete('/deleteAccount/:id', deletePatient);

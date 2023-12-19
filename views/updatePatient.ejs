@@ -3,74 +3,142 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update Patient</title>
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Link to Bootstrap CSS from a CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 
+  <!-- Internal styles for the document -->
+  <style>
+    /* Styling for the 'section' element */
+    section {
+      padding: 60px 0;
+    }
+
+    body {
+      background-color: #e4e4e4;
+      font-family: 'American Typewriter', serif;
+    }
+
+    /* Styling for the buttons with thicker border */
+    .btn-outline-dark {
+      border-width: 2px;
+    }
+
+    /* Styling for the card */
+    .card {
+      max-width: 500px;
+      margin: auto;
+      margin-top: 5%;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styling for the form */
+    form {
+      padding: 20px;
+      margin: auto;
+    }
+
+    .center-btn {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Styling for the responsive image */
+    .responsive-img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+    }
+  </style>
+  <!-- Include the bcryptjs library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+
+  <!-- Add this script block in the head section of your HTML file -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const id = document.getElementById('id').value;
+      const response = await fetch(`/api/patients/id/${id}`);
+      const patientData = await response.json();
+
+      // Pre-fill the form fields with the retrieved patient data
+      document.getElementById('firstName').value = patientData.first_name;
+      document.getElementById('lastName').value = patientData.last_name;
+      document.getElementById('email').value = patientData.email;
+      document.getElementById('phoneNumber').value = patientData.phone_number;
+      document.getElementById('dob').value = patientData.date_of_birth;
+      document.getElementById('password').value = patientData.password;
+      document.getElementById('addressId').value = patientData.address_id;
+    });
+  </script>
+  <title>Update Account</title>
 </head>
 
 <body>
-  <%- include('partials/header') %>
-    <%- include('partials/menu') %>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <div class="card mt-5">
-              <div class="card-body">
+  <div class="container-lg">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-lg-9 col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="text-center mb-4">Update Account Info</h1>
 
-                <h1>Update Patient Information</h1>
-                <!-- Add your form for adding a user -->
-
-                <!-- Bootstrap Form -->
-                <form method="post" action="/api/patients/updateAccount">
-                  <input type="hidden" id="id" name="id" value="<%= id %>" >
-
-                  <div class="form-group">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="text" class="form-control" id="phone_number" name="phone_number" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="date_of_birth">Date of Birth:</label>
-                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="address_id">Address ID:</label>
-                    <input type="text" class="form-control" id="address_id" name="address_id" required>
-                  </div>
-
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+            <form method="POST" action="/api/patients/updateAccount">
+              <input type="hidden" id="id" name="id" value="<%= id %>">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="first_name" required>
               </div>
-            </div>
+
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="last_name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phone_number" required>
+              </div>
+
+              <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" name="date_of_birth" required>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+
+              <div class="form-group">
+                <label for="addressId">Address ID</label>
+                <input type="number" class="form-control" id="addressId" name="address_id" required>
+              </div>
+
+              <button type="submit" class="btn btn-outline-dark center-btn">Submit</button>
+            </form>
           </div>
         </div>
       </div>
-      <%- include('partials/footer') %>
+      <div class="col-lg-3 col-md-4">
+        <img src="/assets/update-image.png" alt="Responsive Image" class="img-fluid responsive-img">
+      </div>
+    </div>
+  </div>
+  <%- include ('partials/footer') %>
+    <!-- Bootstrap JS script from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"></script>
 </body>
 
 </html>
