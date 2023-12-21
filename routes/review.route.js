@@ -36,6 +36,11 @@ router.get("/createReview", (req, res) => {
     res.render("createReview");
 });
 
+router.post("/updateReview", reviewValidator, updateReview);
+router.get("/updateReview/:id", (req, res) => {
+    res.render("updateReview", { id: req.params.id });
+});
+
 router.put("/id/:id",reviewValidator, updateReview);
 
 router.delete("/id/:id", deleteReview);

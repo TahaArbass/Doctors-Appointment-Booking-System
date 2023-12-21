@@ -127,7 +127,7 @@
               <%= specialty.name %>
             </td>
             <td class="patient-actions">
-              <a href="/api/specialties/updatePatient/<%= specialty.id %>"
+              <a href="/api/specialties/update/<%= specialty.id %>"
                 class="btn btn-outline-warning btn-action">Update</a>
               <a href="/api/specialties/deleteSpecialty/<%= specialty.id %>"
                 class="btn btn-outline-danger btn-action">Delete</a>
@@ -138,7 +138,7 @@
     </table>
     </div>
     <!-- Create button on top right -->
-    <a href="/api/patients/signup" class="btn btn-outline-success btn-create-patient">Create</a>
+    <a href="/api/specialties/create" class="btn btn-outline-success btn-create-patient">Create</a>
   </div>
 
   <%- include('partials/footer') %>

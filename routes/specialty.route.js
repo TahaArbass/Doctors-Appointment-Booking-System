@@ -21,9 +21,15 @@ router.get('/name/:name', getSpecialtyByName);
 
 // create , update, delete specialty
 router.post('/create/', SpecialtyValidator ,createSpecialty);
+router.get('/create/', (req, res) => {
+    res.render('createSpecialty');
+});
 
-router.put('/id/:id', SpecialtyValidator ,updateSpecialty);
-
+router.put('/update', SpecialtyValidator ,updateSpecialty);
+router.post('/update', SpecialtyValidator ,updateSpecialty);
+router.get('/update/:id', (req, res) => {
+    res.render('updateSpecialty', {id: req.params.id});
+});
 router.delete('/id/:id', deleteSpecialty);
 router.get('/deleteSpecialty/:id', deleteSpecialty);
 // create, update, delete specialty

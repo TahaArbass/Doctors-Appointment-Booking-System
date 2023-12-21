@@ -123,17 +123,18 @@ const updateDoctor = async (req, res) => {
         date_of_birth: req.body.date_of_birth,
         password: req.body.password,
       },
-      { where: { id: req.params.id } }
+      { where: { id: req.body.id } }
     );
 
     if(!updatedDoctor) {
       return res.status(404).json({ error: 'Doctor not found' });
     }
 
-    res.status(200).json({
-      message: 'Doctor updated successfully',
-      updatedDoctor: updatedDoctor.toJSON,
-    });
+    res.redirect('/api/doctors');
+    // res.status(200).json({
+    //   message: 'Doctor updated successfully',
+    //   updatedDoctor: updatedDoctor.toJSON,
+    // });
 
   } catch (error) {
     console.error(error);

@@ -174,7 +174,7 @@ const createReview = async (req, res) => {
 
 // update a review
 const updateReview = async (req, res) => {
-  const id = req.params.id;
+  const id = req.body.id;
 
   try {
     const { patient_id, doctor_id, rating, comment } = req.body;
@@ -189,10 +189,11 @@ const updateReview = async (req, res) => {
       const updatedReview = await review.update({ patient_id, doctor_id, rating, comment });
 
       if (updatedReview)
-        res.status(200).json({
-          message: "Review updated.",
-          review: updatedReview,
-        });
+        res.redirect('/api/reviews');
+        // res.status(200).json({
+        //   message: "Review updated.",
+        //   review: updatedReview,
+        // });
 
       else {
         res.status(400).json({ message: "Review not updated." });

@@ -90,7 +90,7 @@
           <div class="card-body">
             <h1 class="text-center mb-4">Update Account Info</h1>
 
-            <form method="POST" action="/api/patients/updateAccount">
+            <form method="POST" action="/api/doctors/updateDoctor">
               <input type="hidden" id="id" name="id" value="<%= id %>">
               <div class="form-group">
                 <label for="firstName">First Name</label>
@@ -123,8 +123,8 @@
               </div>
 
               <div class="form-group">
-                <label for="addressId">Address ID</label>
-                <input type="number" class="form-control" id="addressId" name="address_id" required>
+                <label for="addressId">Clinic Address ID</label>
+                <input type="number" class="form-control" id="clinic_address_id" name="clinic_address_id" required>
               </div>
 
               <button type="submit" class="btn btn-outline-dark center-btn">Submit</button>

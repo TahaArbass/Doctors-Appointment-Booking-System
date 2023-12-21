@@ -38,7 +38,10 @@ router.get('/login', (req, res) => {
 router.post('/', DoctorValidator, createDoctor);
 
 router.put('/account/:id', DoctorValidator, updateDoctor);
-
+router.post('/updateDoctor', DoctorValidator, updateDoctor);
+router.get('/updateDoctor/:id', (req, res) => {
+    res.render('updateDoctor', {id: req.params.id});
+});
 router.delete('/account/:id', deleteDoctor);
 router.get('/deleteDoctor/:id', deleteDoctor);
 

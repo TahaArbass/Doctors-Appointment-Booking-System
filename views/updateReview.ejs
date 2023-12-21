@@ -59,8 +59,6 @@
       margin-top: 20px;
     }
   </style>
-
-  <title>Create Specialty</title>
 </head>
 
 <body>
@@ -69,12 +67,29 @@
       <div class="col-lg-9 col-md-8">
         <div class="card">
           <div class="card-body">
-            <h1 class="text-center mb-4">Create Specialty</h1>
+            <h1 class="text-center mb-4">Update Review</h1>
 
-            <form method="POST" action="/api/specialties/create">
+            <form method="POST" action="/api/reviews/updateReview">
+
               <div class="form-group">
-                <label for="name">Specialty Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <input type="hidden" class="form-control" id="id" name="id" value="<%= id%>">
+                <label for="doctorId">Doctor ID</label>
+                <input type="number" class="form-control" id="doctorId" name="doctor_id" required>
+              </div>
+
+              <div class="form-group">
+                <label for="patientId">Patient ID</label>
+                <input type="number" class="form-control" id="patientId" name="patient_id" required>
+              </div>
+
+              <div class="form-group">
+                <label for="rating">Rating</label>
+                <input type="number" class="form-control" id="rating" name="rating" required>
+              </div>
+
+              <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea class="form-control" id="comment" name="comment"></textarea>
               </div>
 
               <button type="submit" class="btn btn-outline-dark center-btn">Submit</button>
@@ -84,7 +99,7 @@
       </div>
       <!-- image -->
       <div class="col-lg-3 col-md-4">
-        <img src="/assets/doctors.png" alt="Responsive Image" class="img-fluid responsive-img">
+        <img src="/assets/update-image.png" alt="Responsive Image" class="img-fluid responsive-img">
       </div>
     </div>
   </div>
@@ -92,7 +107,4 @@
   <!-- Bootstrap JS script from a CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
-</body>
-
-</html>
+   

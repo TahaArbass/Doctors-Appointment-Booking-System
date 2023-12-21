@@ -47,9 +47,10 @@ const createSpecialty = async (req, res) => {
     
     try {
         const createdSpecialty = await Specialty.create({name: name});
-        res.status(201).json({
-            message:"Specialty created successfully",
-            createdSpecialty: createdSpecialty.toJSON()});
+        res.redirect('/api/specialties');
+        // res.status(201).json({
+        //     message:"Specialty created successfully",
+        //     createdSpecialty: createdSpecialty.toJSON()});
     }
     catch (error) {
         console.error(error);
@@ -57,16 +58,17 @@ const createSpecialty = async (req, res) => {
 }
 
 const updateSpecialty = async (req, res) => {
-    const id = req.params.id;
+    const id = req.body.id;
     const name = req.body.name;
     try {
         const updatedSpecialty = await Specialty.findByPk(id);
         if (updatedSpecialty) {
             updatedSpecialty.name = name;
             updatedSpecialty.save();
-            res.status(200).json({
-                message:"Specialty updated successfully",
-                updatedSpecialty: updatedSpecialty.toJSON()});
+            // res.status(200).json({
+            //     message:"Specialty updated successfully",
+            //     updatedSpecialty: updatedSpecialty.toJSON()});
+            res.redirect('/api/specialties');
         }
         else {
             return res.status(404).json({ message: 'Specialty not found' });
