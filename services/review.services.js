@@ -7,7 +7,8 @@ const Patient = require("../models/patient");
 const getAllReviews = async (req, res) => {
   try {
     const reviews = await Review.findAll();
-    res.status(200).json(reviews);
+    // res.status(200).json(reviews);
+    res.render('detailReviews', { reviews: reviews });
   }
 
   catch (error) {
@@ -154,10 +155,11 @@ const createReview = async (req, res) => {
       const review = await Review.create({ doctor_id, patient_id, rating, comment });
 
       if (review)
-        res.status(201).json({
-          message: 'Review created.',
-          review: review,
-        });
+        res.redirect('/api/reviews');
+        // res.status(201).json({
+        //   message: 'Review created.',
+        //   review: review,
+        // });
 
       else {
         res.status(400).json({ message: 'Review not created.' });
@@ -218,7 +220,8 @@ const deleteReview = async (req, res) => {
       const deletedReview = await review.destroy();
 
       if (deletedReview)
-        res.status(200).json({ message: "Review deleted." });
+        res.redirect('/api/reviews');
+        // res.status(200).json({ message: "Review deleted." });
 
       else {
         res.status(400).json({ message: "Review not deleted." });

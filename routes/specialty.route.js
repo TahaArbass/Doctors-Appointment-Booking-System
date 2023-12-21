@@ -25,6 +25,6 @@ router.post('/create/', SpecialtyValidator ,createSpecialty);
 router.put('/id/:id', SpecialtyValidator ,updateSpecialty);
 
 router.delete('/id/:id', deleteSpecialty);
-
+router.get('/deleteSpecialty/:id', deleteSpecialty);
 // create, update, delete specialty
 module.exports = router;

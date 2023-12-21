@@ -37,6 +37,9 @@ router.get('/signup', (req, res) => {
 }); // for the view
 
 router.post('/login', loginPatient);
+router.get('/login', (req, res) => {
+    res.render('loginPatient');
+}); // for the view
 
 // router.put('/updateAccount', PatientValidator, updatePatient);
 router.post('/updateAccount', PatientValidator, updatePatient); // for the view

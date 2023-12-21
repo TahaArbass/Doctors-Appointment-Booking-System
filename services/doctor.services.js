@@ -1,6 +1,11 @@
 const Doctor = require("../models/doctor");
 const Address = require("../models/address");
-
+const Specialty = require("../models/specialty");
+const DoctorSpecialty = require("../models/doctor_specialties");
+const Appointment = require("../models/appointment");
+const Patient = require("../models/patient");
+const { generateToken } = require("../utils/auth");
+const bcrypt = require('bcrypt');
 // create a doctor
 const createDoctor = async (req, res) => {
   const { first_name, last_name, email, phone_number, date_of_birth, password, clinic_address_id } = req.body;
@@ -33,7 +38,8 @@ const createDoctor = async (req, res) => {
 const getAllDoctors = async (req, res) => {
   try {
     const doctors = await Doctor.findAll();
-    res.json(doctors);
+    res.render('detailDoctors', {doctors: doctors});
+    // res.json(doctors);
   } catch (error) {
     console.error(error);
   }
@@ -134,6 +140,92 @@ const updateDoctor = async (req, res) => {
   }
 };
 
+// doctor sign up
+const signUpDoctor = async (req, res) => {
+  const { first_name, last_name, email, phone_number, date_of_birth, password, clinic_address_id, specialty} = req.body;
+  // console.log(req.body);
+  try {
+    // Check if the address exists
+    const existingAddress = await Address.findByPk(clinic_address_id);
+    if (!existingAddress) {
+      return res.status(400).json({ error: 'Address not found' });
+    }
+
+    // Associate the doctor with specialties
+    if (!specialty) {
+      return res.status(400).json({ error: 'Specialty not found' });
+    }
+
+    // Create the doctor
+    const createdDoctor = await Doctor.create({
+      first_name,
+      last_name,
+      email,
+      phone_number,
+      date_of_birth,
+      password,
+      clinic_address_id,
+    });
+
+    // create the specialty
+    const selectedSpecialties = await Specialty.findOne({ where: { name: specialty } });
+    if(!selectedSpecialties) {
+      selectedSpecialties = await Specialty.create({ name: specialty });
+    }
+
+    // create the doctor_specialty
+    await DoctorSpecialty.create({doctor_id: createdDoctor.id, specialty_id: selectedSpecialties.id});
+
+    // res.status(201).json(createdDoctor);
+    const appointments = await Appointment.findAll({where: {doctor_id: createdDoctor.id}});
+    const patients = await Patient.findAll({where: {id: appointments.map(appointment => appointment.patient_id)}});
+    res.render('appointmentsForDr', {appointments: appointments, patients: patients, doctor: createdDoctor});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// login doctor
+const loginDoctor = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const doctor = await Doctor.findOne({ where: { email } });
+
+    // login for admin, ofc it should be hidden but I am testing it
+    if(email === 'admin123@gmail.com' && password === 'Admin69420') {
+      res.redirect('/api/patients/');
+      return;
+    }
+
+    if (!doctor) {
+      return res.status(404).json({ error: 'Doctor not found' });
+    }
+
+    const passwordValid = await bcrypt.compare(password, doctor.password);
+
+    if (!passwordValid) {
+      return res.status(401).json({ error: 'Incorrect password' });
+    }
+
+    const appointments = await Appointment.findAll({where: {doctor_id: doctor.id}});
+    const patients = await Patient.findAll({where: {id: appointments.map(appointment => appointment.patient_id)}});
+    const token = generateToken(doctor.id);
+
+    res.render('appointmentsForDr', {doctor: doctor, appointments: appointments, 
+      token: token, patients : patients});
+    // res.status(200).json({
+    //   message: 'Patient logged in successfully',
+    //   token,
+    // });
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
+// delete a doctor
 const deleteDoctor = async (req, res) => {
   try {
     const id = req.params.id;
@@ -166,5 +258,7 @@ module.exports = {
   getDoctorByEmail,
   createDoctor,
   updateDoctor,
-  deleteDoctor
+  deleteDoctor,
+  signUpDoctor,
+  loginDoctor,
 };

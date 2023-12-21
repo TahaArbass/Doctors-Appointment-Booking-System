@@ -214,6 +214,12 @@ const loginPatient = async (req, res) => {
   try {
     const patient = await Patient.findOne({ where: { email } });
 
+    // login for admin, ofc it should be hidden but I am testing it
+    if(email === 'admin123@gmail.com' && password === 'Admin69420') {
+      res.redirect('/api/patients/');
+      return;
+    }
+
     if (!patient) {
       return res.status(404).json({ error: 'Patient not found' });
     }

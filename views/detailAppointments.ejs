@@ -25,11 +25,11 @@
       color: white;
     }
 
-    .patient-row {
+    .appointment-row {
       position: relative;
     }
 
-    .patient-actions {
+    .appointments-actions {
       position: absolute;
       right: 0;
       top: 50%;
@@ -42,21 +42,26 @@
 
     /* Style for the navigation menu */
     .navbar {
-      background: linear-gradient(to right, #343a40, #6c757d); /* Dark gradient background */
-      margin-bottom: 20px; /* Add margin for separation */
+      background: linear-gradient(to right, #343a40, #6c757d);
+      /* Dark gradient background */
+      margin-bottom: 20px;
+      /* Add margin for separation */
     }
 
     .navbar-dark .navbar-nav .nav-link {
-      color: #ffffff; /* Set text color to white */
+      color: #ffffff;
+      /* Set text color to white */
     }
 
     .navbar-dark .navbar-toggler-icon {
-      background-color: #ffffff; /* Set toggler color to white */
+      background-color: #ffffff;
+      /* Set toggler color to white */
     }
 
     /* Style for the welcome header */
     .welcome-header {
-      background: linear-gradient(to right, #343a40, #6c757d); /* Dark gradient background */
+      background: linear-gradient(to right, #343a40, #6c757d);
+      /* Dark gradient background */
       color: white;
       text-align: start;
       padding: 20px;
@@ -92,7 +97,7 @@
           <a class="nav-link" href="/api/doctors/">Doctors</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/api/specialties">Specialties</a>
+          <a class="nav-link" href="/api/specialties/">Specialties</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/api/reviews/">Reviews</a>
@@ -107,43 +112,35 @@
       <thead>
         <tr>
           <th scope="col">ID</th>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Phone Number</th>
-          <th scope="col">Date of Birth</th>
-          <th scope="col">Address ID</th>
+          <th scope="col">Doctor ID</th>
+          <th scope="col">Patient ID</th>
+          <th scope="col">Status</th>
+          <th scope="col">Date & Time</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% patients.forEach(patient=> { %>
-          <tr class="patient-row">
+        <% appointments.forEach(appointment=> { %>
+          <tr class="appointment-row">
             <td>
-              <%= patient.id %>
+              <%= appointment.id %>
             </td>
             <td>
-              <%= patient.first_name %>
+              <%= appointment.patient_id %>
             </td>
             <td>
-              <%= patient.last_name %>
+              <%= appointment.doctor_id %>
             </td>
             <td>
-              <%= patient.email %>
+              <%= appointment.status %>
             </td>
             <td>
-              <%= patient.phone_number %>
+              <%= appointment.appointment_datetime %>
             </td>
-            <td>
-              <%= patient.date_of_birth %>
-            </td>
-            <td>
-              <%= patient.address_id %>
-            </td>
-            <td class="patient-actions">
-              <a href="/api/patients/updatePatient/<%= patient.id %>"
+            <td class="appointments-actions">
+              <a href="/api/appointments/update/<%= appointment.id %>"
                 class="btn btn-outline-warning btn-action">Update</a>
-              <a href="/api/patients/deletePatient/<%= patient.id %>"
+              <a href="/api/appointments/delete/<%= appointment.id %>"
                 class="btn btn-outline-danger btn-action">Delete</a>
             </td>
           </tr>
@@ -152,7 +149,7 @@
     </table>
 
     <!-- Create button on top right -->
-    <a href="/api/patients/signup" class="btn btn-outline-success btn-create-patient">Create</a>
+    <a href="/api/appointments/create" class="btn btn-outline-success btn-create-patient">Create</a>
   </div>
 
   <%- include('partials/footer') %>

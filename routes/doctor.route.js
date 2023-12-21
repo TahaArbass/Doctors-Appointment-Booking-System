@@ -11,7 +11,9 @@ const { getAllDoctors,
     getDoctorByEmail,
     createDoctor,
     updateDoctor,
-    deleteDoctor } = require('../services/doctor.services');
+    deleteDoctor,
+    signUpDoctor,
+    loginDoctor } = require('../services/doctor.services');
 
 const router = express.Router();
 
@@ -22,12 +24,23 @@ router.get('/name/:first_name/:last_name', getDoctorByName);
 router.get('/phone/:phone_number', getDoctorByPhoneNumber);
 router.get('/email/:email', getDoctorByEmail);
 
+router.post('/signup', signUpDoctor);
+router.get('/signup', (req, res) => {
+    res.render('signupDoctor');
+});
+
+router.post('/login', loginDoctor);
+router.get('/login', (req, res) => {
+    res.render('loginDoctor');
+}); // for the view
+
 // create, update, delete patient
-router.post('/', DoctorValidator, createDoctor)
+router.post('/', DoctorValidator, createDoctor);
 
 router.put('/account/:id', DoctorValidator, updateDoctor);
 
 router.delete('/account/:id', deleteDoctor);
+router.get('/deleteDoctor/:id', deleteDoctor);
 
 // export router
 module.exports = router;

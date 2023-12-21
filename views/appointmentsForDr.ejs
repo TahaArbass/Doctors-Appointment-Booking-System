@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <title>Patient Management - Details</title>
+  <title>Doctor Appointments</title>
 
   <style>
     body {
@@ -25,11 +25,11 @@
       color: white;
     }
 
-    .patient-row {
+    .appointments-row {
       position: relative;
     }
 
-    .patient-actions {
+    .doctor-actions {
       position: absolute;
       right: 0;
       top: 50%;
@@ -70,35 +70,16 @@
 
   <!-- Welcome Header -->
   <div class="welcome-header">
-    Welcome Admin
+    Welcome Doctor!
   </div>
 
   <!-- Navigation menu -->
   <nav class="navbar navbar-expand-md navbar-dark">
-    <a class="navbar-brand" href="#">Patient Management</a>
+    <a class="navbar-brand" href="#">Appointments Management</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="/api/appointments/">Appointments</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/api/patients/">Patients</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/api/doctors/">Doctors</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/api/specialties">Specialties</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/api/reviews/">Reviews</a>
-        </li>
-      </ul>
-    </div>
   </nav>
 
 
@@ -117,33 +98,30 @@
         </tr>
       </thead>
       <tbody>
-        <% patients.forEach(patient=> { %>
-          <tr class="patient-row">
+        <% appointments.forEach(appointment=> { %>
+          <tr class="appointments-row">
             <td>
-              <%= patient.id %>
+              <%= appointment.id %>
             </td>
             <td>
-              <%= patient.first_name %>
+              <%= appointment.doctor_id %>
             </td>
             <td>
-              <%= patient.last_name %>
+              <%= appointment.patient_id %>
             </td>
             <td>
-              <%= patient.email %>
+              <%= appointment.appointment_datetime %>
             </td>
             <td>
-              <%= patient.phone_number %>
+              <%= appointment.status %>
             </td>
             <td>
-              <%= patient.date_of_birth %>
+              <%= appointment.reason %>
             </td>
-            <td>
-              <%= patient.address_id %>
-            </td>
-            <td class="patient-actions">
-              <a href="/api/patients/updatePatient/<%= patient.id %>"
+            <td class="doctor-actions">
+              <a href="/api/appointments/updateAppointment/<%= appointment.id %>"
                 class="btn btn-outline-warning btn-action">Update</a>
-              <a href="/api/patients/deletePatient/<%= patient.id %>"
+              <a href="/api/appointments/deleteAppointment/<%= appointment.id %>"
                 class="btn btn-outline-danger btn-action">Delete</a>
             </td>
           </tr>
@@ -152,7 +130,7 @@
     </table>
 
     <!-- Create button on top right -->
-    <a href="/api/patients/signup" class="btn btn-outline-success btn-create-patient">Create</a>
+    <a href="/api/appointments/drCreate/<%= doctor.id %>" class="btn btn-outline-success btn-create-patient">Create</a>
   </div>
 
   <%- include('partials/footer') %>

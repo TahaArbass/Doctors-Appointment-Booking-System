@@ -31,10 +31,13 @@ router.get("/rating/:rating", getReviewsByRating);
 
 // create, update, delete routes
 
-router.post("/", reviewValidator, createReview);
+router.post("/createReview", reviewValidator, createReview);
+router.get("/createReview", (req, res) => {
+    res.render("createReview");
+});
 
 router.put("/id/:id",reviewValidator, updateReview);
 
 router.delete("/id/:id", deleteReview);
-
+router.get("/deleteReview/:id", deleteReview);
 module.exports = router;

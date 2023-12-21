@@ -9,7 +9,8 @@ const getAllAppointments = async (req, res) => {
     try {
         const appointments = await Appointment.findAll();
 
-        res.status(200).json(appointments);
+        // res.status(200).json(appointments);
+        res.render('detailAppointments', { appointments: appointments });
     } catch (error) {
         console.error(error);
     }
@@ -171,10 +172,11 @@ const createAppointment = async (req, res) => {
             reason,
         });
 
-        res.status(201).json({
-            message: 'Appointment created successfully.',
-            appointment: appointment.toJSON
-        });
+        // res.status(201).json({
+        //     message: 'Appointment created successfully.',
+        //     appointment: appointment.toJSON
+        // });
+        res.redirect('/api/appointments');
 
     }
 
@@ -183,7 +185,7 @@ const createAppointment = async (req, res) => {
     }
 }
 
-// update an appointment
+// update an appointment (for admin)
 const updateAppointment = async (req, res) => {
     const { doctor_id, patient_id, appointment_datetime, status, reason } = req.body;
 
@@ -207,16 +209,57 @@ const updateAppointment = async (req, res) => {
             appointment_datetime,
             status,
             reason,
-        }, {where : { id: req.params.id }});
+        }, {where : { id: req.body.id }});
 
         if (!updatedAppointment) {
             return res.status(404).json({ error: 'Appointment not updated' });
         }
+        res.redirect('/api/appointments');
+        // res.status(200).json({
+        //     message: 'Appointment updated successfully',
+        //     updatedAppointment: updatedAppointment.toJSON,
+        // });
+    }
 
-        res.status(200).json({
-            message: 'Appointment updated successfully',
-            updatedAppointment: updatedAppointment.toJSON,
-        });
+    catch (error) {
+        console.error(error);
+    }
+}
+
+// update an appointment
+const updateAppointmentForPatient = async (req, res) => {
+    const { doctor_id, patient_id, appointment_datetime, status, reason } = req.body;
+
+    try {
+
+        // check if patient and doctor exists
+        const patient = await Patient.findByPk(patient_id);
+
+        if (!patient)
+            res.status(404).json({ message: 'Patient not found. Can not create appointment.' });
+
+        const doctor = await Doctor.findByPk(doctor_id);
+
+        if (!doctor)
+            res.status(404).json({ message: 'Doctor not found. Can not create appointment.' });
+
+        // update
+        const updatedAppointment = await Appointment.update({
+            doctor_id,
+            patient_id,
+            appointment_datetime,
+            status,
+            reason,
+        }, {where : { id: req.body.id }});
+
+        if (!updatedAppointment) {
+            return res.status(404).json({ error: 'Appointment not updated' });
+        }
+        res.redirect('/api/appointments');
+        // res.status(200).json({
+        //     message: 'Appointment updated successfully',
+        //     updatedAppointment: updatedAppointment.toJSON,
+        // });
     }
 
     catch (error) {
@@ -239,10 +282,11 @@ const deleteAppointment = async (req, res) => {
         const deletedAppointment = await appointment.destroy();
 
         // Send a JSON response indicating success
-        res.status(200).json({
-            message: 'Appointment deleted successfully',
-            deletedAppointment: deletedAppointment.toJSON(),
-        });
+        // res.status(200).json({
+        //     message: 'Appointment deleted successfully',
+        //     deletedAppointment: deletedAppointment.toJSON(),
+        // });
+        res.redirect('/api/appointments');
     }
 
     catch (error) {

@@ -3,7 +3,8 @@ const Specialty = require('../models/specialty');
 const getAllSpecialties = async (req, res) => {
     try {
       const specialties = await Specialty.findAll();
-      res.status(200).json(specialties);
+    //   res.status(200).json(specialties);
+    res.render('detailSpecialties', {specialties: specialties});
     } catch (error) {
       console.error(error);
     }
@@ -85,11 +86,12 @@ const deleteSpecialty = async (req, res) => {
           return res.status(404).json({ error: 'Specialty not found' });
         }
         else{
-            const deletedSpecialty = await specialty.destroy();
-            res.status(200).json({
-                message: 'Specialty deleted successfully',
-                deletedSpecialty: deletedSpecialty.toJSON(),
-            });
+             await specialty.destroy();
+            // res.status(200).json({
+            //     message: 'Specialty deleted successfully',
+            //     deletedSpecialty: deletedSpecialty.toJSON(),
+            // });
+            res.redirect('/api/specialties');
         }    
       } catch (error) {
         console.error(error);
