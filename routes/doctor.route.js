@@ -24,18 +24,23 @@ router.get('/name/:first_name/:last_name', getDoctorByName);
 router.get('/phone/:phone_number', getDoctorByPhoneNumber);
 router.get('/email/:email', getDoctorByEmail);
 
+// sign up
 router.post('/signup', signUpDoctor);
 router.get('/signup', (req, res) => {
     res.render('signupDoctor');
-});
+}); // rendering view
 
+// login
 router.post('/login', loginDoctor);
 router.get('/login', (req, res) => {
     res.render('loginDoctor');
-}); // for the view
+}); // rendering view
 
-// create, update, delete patient
-router.post('/', DoctorValidator, createDoctor);
+// create, update, delete doctor
+router.post('/create', DoctorValidator, createDoctor);
+router.get('/create', (req, res) =>{
+    res.render('createDoctor');
+});
 
 router.put('/account/:id', DoctorValidator, updateDoctor);
 router.post('/updateDoctor', DoctorValidator, updateDoctor);

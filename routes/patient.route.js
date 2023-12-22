@@ -30,6 +30,9 @@ router.get('/email/:email', getPatientByEmail);
 
 // create, update, delete patient
 router.post('/create', PatientValidator, createPatient);
+router.get('/create', (req, res) => {
+    res.render('createPatient');
+}); // for the view
 
 router.post('/signup', PatientValidator, signupPatient);
 router.get('/signup', (req, res) => {

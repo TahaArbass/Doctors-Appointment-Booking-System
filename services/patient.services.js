@@ -202,8 +202,40 @@ const deletePatient = async (req, res) => {
 
 // signup patient
 const signupPatient = async (req, res) => {
-  createPatient(req, res);
-}
+  const { first_name, last_name, email, phone_number, date_of_birth, password, address_id } = req.body;
+
+  try {
+
+    const existingAddress = await Address.findByPk(address_id);
+
+    if (!existingAddress) {
+      return res.status(400).json({ error: 'Address not found' });
+    }
+
+    const patient = await Patient.create({
+      first_name,
+      last_name,
+      email,
+      phone_number,
+      date_of_birth,
+      password,
+      address_id,
+    });
+
+    const token = generateToken({id: patient.id});
+    res.render('AppointmentsForPatient', {patient:patient, token:token});
+    // res.status(201).json({
+    //   message: 'Patient created successfully',
+    //   patient: patient.toJSON(),
+    //   token,
+    // });
+
+    res.redirect('/api/patients/');
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 
 

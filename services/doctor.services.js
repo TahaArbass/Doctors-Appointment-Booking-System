@@ -29,7 +29,8 @@ const createDoctor = async (req, res) => {
       password,
       clinic_address_id,
     });
-    res.status(201).json(createdDoctor);
+    // res.status(201).json(createdDoctor);
+    res.redirect('/api/doctors');
   } catch (error) {
     console.error(error);
   }

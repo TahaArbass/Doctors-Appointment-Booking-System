@@ -11,7 +11,7 @@
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 
-  <title>Create Patient</title>
+  <title>Create Doctor</title>
   <!-- Internal styles for the document -->
   <style>
     /* Styling for the 'section' element */
@@ -55,7 +55,7 @@
 
     /* Styling for the responsive image */
     .responsive-img {
-      max-width: 100%;
+      max-width: 130%;
       height: auto;
       margin-top: 20px;
     }
@@ -68,9 +68,9 @@
       <div class="col-lg-9 col-md-8">
         <div class="card">
           <div class="card-body">
-            <h1 class="text-center mb-4">Create Patient</h1>
+            <h1 class="text-center mb-4">Create Doctor</h1>
 
-            <form method="POST" action="/api/patients/create">
+            <form method="POST" action="/api/doctors/create">
               <div class="form-group">
                 <label for="firstName">First Name</label>
                 <input type="text" class="form-control" id="firstName" name="first_name" required>
@@ -102,8 +102,13 @@
               </div>
 
               <div class="form-group">
-                <label for="addressId">Address ID</label>
-                <input type="number" class="form-control" id="addressId" name="address_id" required>
+                <label for="specialty">Specialty</label>
+                <input type="text" class="form-control" id="specialty" name="specialty" required>
+              </div>
+
+              <div class="form-group">
+                <label for="clinic_address_id">Clinic Address ID</label>
+                <input type="number" class="form-control" id="clinic_address_id" name="clinic_address_id" required>
               </div>
 
               <button type="submit" class="btn btn-outline-dark center-btn">Create</button>
@@ -111,8 +116,9 @@
           </div>
         </div>
       </div>
+      <!-- image -->
       <div class="col-lg-3 col-md-4">
-        <img src="/assets/happy-patient.png" alt="Responsive Image" class="img-fluid responsive-img">
+        <img src="/assets/doctors.png" alt="Responsive Image" class="img-fluid responsive-img">
       </div>
     </div>
   </div>
