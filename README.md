@@ -1,4 +1,4 @@
-![Doctor Image](./pngs/doctor.png)
+![Doctor Image](./public/assets/doctor.png)
 
 # Doctors-Appointment-Booking-System
 
@@ -138,6 +138,6 @@ The API includes the following endpoints:
 
 ## Entity Relationship Diagram
 
-![ERD Image](./pngs/ERD.png)
+![ERD Image](./public/assets/ERD.png)
 
 &copy; 2023 Taha Arbass. All rights reserved.
